@@ -202,6 +202,13 @@ export class FloWorkerService {
             wc3FolderPath = wc3FolderPath.replace('\\_retail_', '');
         }
 
+        let wc3UserDataPath = "";
+
+        if (isLinux)
+        {
+            wc3UserDataPath = this.store.getters.updateService.loadUserDataPath();
+        }
+
         const floControllerHostUrl = isTest ?
             FLO_CONTROLLER_HOST_URL_TEST : FLO_CONTROLLER_HOST_URL_PROD;
 
@@ -209,7 +216,8 @@ export class FloWorkerService {
             floWorkerFolderPath,
             floWorkerExePath,
             wc3FolderPath,
-            floControllerHostUrl
+            floControllerHostUrl,
+            wc3UserDataPath
         };
 
         return result;

@@ -7,14 +7,14 @@ export class UpdateService {
     private bnetKey = "bnetKey";
     private currentVersionKey = "currentVersionKey";
     private isClassicIconKey = "isClassicIconKey";
-    private winePrefixPathKey = "winePrefixPathKey"
+    private userDataPathKey = "winePrefixPathKey"
 
-    loadWinePrefix(): string {
-        return this.store.get(this.winePrefixPathKey);
+    loadUserDataPath(): string {
+        return this.store.get(this.userDataPathKey);
     }
 
-    saveWinePrefix(value: string) {
-        this.store.set(this.winePrefixPathKey, value);
+    saveUserDataPath(value: string) {
+        this.store.set(this.userDataPathKey, value);
     }
 
     loadBnetPath(): string {

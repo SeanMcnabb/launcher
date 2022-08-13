@@ -74,7 +74,7 @@ const mod = {
       commit.SET_BNET_PATH(rootGetters.updateService.loadBnetPath());
       commit.SET_W3_PATH(rootGetters.updateService.loadW3Path());
       commit.SET_LOCAL_W3C_VERSION(rootGetters.updateService.loadW3CVersion());
-      commit.SET_WINE_PREFIX_PATH(rootGetters.updateService.loadWinePrefix());
+      commit.SET_WINE_PREFIX_PATH(rootGetters.updateService.loadUserDataPath());
     },
     resetPaths(context: ActionContext<UpdateHandlingState, RootState>) {
       const { rootGetters, commit } = moduleActionContext(context, mod);
