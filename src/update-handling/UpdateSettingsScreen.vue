@@ -4,22 +4,24 @@
     <div style="padding-top: 40px">
       <div class="options-header w3font" style="margin-bottom: 10px">Directory Settings</div>
         <div class="location-wrapper">
+          <div class="inner-location-wrapper">
 
-        <div class="w3c-icon" :title="`Enter the location to the win prefix`"/>
-        <div class="reset-button-line"  :class="isW3LocationWrong ? 'path-is-wrong' : 'path-is-right'">
-          <div :title="explanationW3Wrong">{{winePrefixPath}}</div>
-          <div class="reset-button" @click="resetW3Path" />
-        </div>
+          <div class="w3c-icon" :title="`Enter the location to the user data path for warcraft 3`"/>
+          <div class="reset-button-line"  :class="isW3LocationWrong ? 'path-is-wrong' : 'path-is-right'">
+            <div :title="explanationW3Wrong">{{userDataPath}}</div>
+            <div class="reset-button" @click="resetW3Path" />
+          </div>
 
-        <div class="w3c-icon" :title="`Enter the location to wc3 (Usually ${defaultW3Location})`"/>
-        <div class="reset-button-line"  :class="isW3LocationWrong ? 'path-is-wrong' : 'path-is-right'">
-          <div :title="explanationW3Wrong">{{w3Path}}</div>
-          <div class="reset-button" @click="resetW3Path" />
-        </div>
-        <div class="bnet-icon" :title="`Enter the location to wc3 (Usually ${defaultBnetLocation})`" />
-        <div class="reset-button-line" :class="isBnetLocationWrong ? 'path-is-wrong' : 'path-is-right'">
-          <div :title="explanationBnetWrong">{{battleNet}}</div>
-          <div class="reset-button" @click="resetBnetPath" />
+          <div class="w3c-icon" :title="`Enter the location to wc3 (Usually ${defaultW3Location})`"/>
+          <div class="reset-button-line"  :class="isW3LocationWrong ? 'path-is-wrong' : 'path-is-right'">
+            <div :title="explanationW3Wrong">{{w3Path}}</div>
+            <div class="reset-button" @click="resetW3Path" />
+          </div>
+          <div class="bnet-icon" :title="`Enter the location to wc3 (Usually ${defaultBnetLocation})`" />
+          <div class="reset-button-line" :class="isBnetLocationWrong ? 'path-is-wrong' : 'path-is-right'">
+            <div :title="explanationBnetWrong">{{battleNet}}</div>
+            <div class="reset-button" @click="resetBnetPath" />
+          </div>
         </div>
       </div>
       <div class="options-header w3font" style="margin-top: 20px">Color Settings</div>
@@ -343,11 +345,22 @@ export default class UpdateSettingsScreen extends Vue {
   width: 30px;
 }
 
+.inner-location-wrapper {
+  height: 180px;
+  width: 605px;
+  top: -20px;
+  position: relative;
+  padding: 10px 20px 0px 0px;
+  margin: 0%;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
 .location-wrapper {
   background: url("~@/assets/images/settings/Settings_Directory_Text_Frame.png") no-repeat center;
   background-size: cover;
-  padding: 28px 30px 30px;
-  height: 154px;
+  padding: 28px 30px 30px 30px;
+  height: 150px;
   width: 605px;
 }
 </style>
