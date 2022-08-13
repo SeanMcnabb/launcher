@@ -42,6 +42,11 @@ export abstract class LauncherStrategy {
             return;
         }
 
+        if (this.store.state.isLinux)
+        {
+            mapsPath = this.store.state.updateHandling.userDataPath + "maps/";
+        }
+
         const delimiter = mapsPath.endsWith('/') || mapsPath.endsWith('\\') ? '' : '/';
         const to = `${mapsPath}${delimiter}${fileName}`;
         logger.info(`Download ${fileName} to: ${to}`)

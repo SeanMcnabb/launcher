@@ -2,7 +2,7 @@ export interface UpdateHandlingState {
   isUpdating: boolean,
   bnetPath: string,
   w3Path: string,
-  winePrefixPath: string,
+  userDataPath: string,
   localW3cVersion: string,
   onlineW3cVersion: string,
   localLauncherVersion: string,

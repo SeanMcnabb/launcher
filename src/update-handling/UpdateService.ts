@@ -7,7 +7,7 @@ export class UpdateService {
     private bnetKey = "bnetKey";
     private currentVersionKey = "currentVersionKey";
     private isClassicIconKey = "isClassicIconKey";
-    private userDataPathKey = "winePrefixPathKey"
+    private userDataPathKey = "userDataPathKey"
 
     loadUserDataPath(): string {
         return this.store.get(this.userDataPathKey);

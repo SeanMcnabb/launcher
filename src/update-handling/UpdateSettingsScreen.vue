@@ -163,8 +163,8 @@ export default class UpdateSettingsScreen extends Vue {
     return this.$store.direct.state.isTest;
   }
 
-  get winePrefixPath(): string {
-    return this.$store.direct.state.updateHandling.winePrefixPath;
+  get userDataPath(): string {
+    return this.$store.direct.state.updateHandling.userDataPath;
   }
 
   get battleNet(): string {
