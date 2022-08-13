@@ -169,7 +169,10 @@ export class FloWorkerService {
 
     private createWorkerSettings(isTest: boolean) {
         const isWindows = this.store.state.isWindows;
-        const floExecutable = (isWindows) ? 'flo-worker.exe' : 'flo-worker';
+        const isLinux = this.store.state.isLinux;
+        const floExecutable = isWindows ? 'flo-worker.exe'
+                              : isLinux ? 'flo-worker.elf'
+                              : 'flo-worker';
         let floWorkerFolderPath: string;
         if (environment.isDev) {
             const appPath = remote.app.getAppPath();

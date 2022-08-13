@@ -155,6 +155,7 @@ export class FloWorkerInstance {
         const promise = new Promise<void>((res) => {
             this.floWorkerProcess = spawn(this.settings.floWorkerExePath,
                 ['--installation-path', this.settings.wc3FolderPath,
+                 '--user-data-path', "/home/user/Games/warcraft-iii-reforged/drive_c/users/user/Documents/Warcraft III/",
                     '--controller-host', this.settings.floControllerHostUrl
                 ],
                 { cwd: this.settings.floWorkerFolderPath }

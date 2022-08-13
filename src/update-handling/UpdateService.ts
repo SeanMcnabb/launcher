@@ -7,9 +7,18 @@ export class UpdateService {
     private bnetKey = "bnetKey";
     private currentVersionKey = "currentVersionKey";
     private isClassicIconKey = "isClassicIconKey";
+    private winePrefixPathKey = "winePrefixPathKey"
+
+    loadWinePrefix(): string {
+        return this.store.get(this.winePrefixPathKey);
+    }
+
+    saveWinePrefix(value: string) {
+        this.store.set(this.winePrefixPathKey, value);
+    }
 
     loadBnetPath(): string {
-        return this.store.get(this.bnetKey)
+        return this.store.get(this.bnetKey);
     }
 
     saveBnetPath(value: string) {
@@ -17,7 +26,7 @@ export class UpdateService {
     }
 
     loadW3CVersion(): string {
-        return this.store.get(this.currentVersionKey)
+        return this.store.get(this.currentVersionKey);
     }
 
     saveLocalW3CVersion(value: string) {

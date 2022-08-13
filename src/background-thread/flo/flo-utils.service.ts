@@ -5,6 +5,7 @@ import path from 'path'
 class FloUtilsService {
   private isDev = process.argv.includes('--dev');
   private isWindows = process.platform === 'win32'
+  private isLinux = process.platform === 'linux'
   registerHandlers() {
     ipcMain.handle('flo-add-firewall-rule', async () => {
       if (!this.isWindows) {
@@ -24,7 +25,9 @@ class FloUtilsService {
   }
 
   getFloWorkerExecutablePath() {
-    const floExecutable = this.isWindows ? 'flo-worker.exe' : 'flo-worker';
+    const floExecutable = this.isWindows ? 'flo-worker.exe'
+                          : this.isLinux ? 'flo-worker.elf'
+                          : 'flo-worker';
     let floWorkerFolderPath: string;
     if (this.isDev) {
         const appPath = app.getAppPath();

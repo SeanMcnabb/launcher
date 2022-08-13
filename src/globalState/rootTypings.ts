@@ -3,6 +3,7 @@ import { EPlayerGameStatus, ICurrentGameInfo } from "@/flo-integration/flo-worke
 export interface RootState {
     isTest: boolean,
     isWindows: boolean,
+    isLinux: boolean,
     newsUrl: string,
     updateUrl: string,
     selectedLoginGateway: LoginGW,

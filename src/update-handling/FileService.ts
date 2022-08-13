@@ -25,6 +25,10 @@ export class FileService {
         return os.platform() === "win32";
     }
 
+    public isLinux() {
+        return os.platform() === "linux";
+    }
+
     public downloadMap(fileName: string, mapsPath: string,  onProgress?: (percentage: number) => void) {
         return this.updateStrategy.downloadMap(fileName, mapsPath, onProgress);
     }

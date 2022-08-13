@@ -11,6 +11,7 @@ const mod = {
   state: {
     bnetPath: "",
     w3Path: "",
+    winePrefixPath: "",
     localW3cVersion: "",
     onlineW3cVersion: "",
     localLauncherVersion: "",
@@ -73,6 +74,7 @@ const mod = {
       commit.SET_BNET_PATH(rootGetters.updateService.loadBnetPath());
       commit.SET_W3_PATH(rootGetters.updateService.loadW3Path());
       commit.SET_LOCAL_W3C_VERSION(rootGetters.updateService.loadW3CVersion());
+      commit.SET_WINE_PREFIX_PATH(rootGetters.updateService.loadWinePrefix());
     },
     resetPaths(context: ActionContext<UpdateHandlingState, RootState>) {
       const { rootGetters, commit } = moduleActionContext(context, mod);
@@ -99,6 +101,10 @@ const mod = {
     },
     SET_W3_PATH(state: UpdateHandlingState, path: string) {
       state.w3Path = path;
+    },
+    SET_WINE_PREFIX_PATH(state: UpdateHandlingState, path: string)
+    {
+      state.winePrefixPath = path;
     },
     SET_LOCAL_W3C_VERSION(state: UpdateHandlingState, version: string) {
       state.localW3cVersion = version;

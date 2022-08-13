@@ -24,6 +24,10 @@ module.exports = {
           {
             from: 'libs/flo-worker',
             to: './resources/app.asar.unpacked/flo-worker',
+          },
+          {
+            from: 'libs/flo-worke.elf',
+            to: './resources/app.asar.unpacked/flo-worker.elf',
           }
         ],
         afterSign: "notarize.js",

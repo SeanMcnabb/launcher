@@ -4,6 +4,13 @@
     <div style="padding-top: 40px">
       <div class="options-header w3font" style="margin-bottom: 10px">Directory Settings</div>
         <div class="location-wrapper">
+
+        <div class="w3c-icon" :title="`Enter the location to the win prefix`"/>
+        <div class="reset-button-line"  :class="isW3LocationWrong ? 'path-is-wrong' : 'path-is-right'">
+          <div :title="explanationW3Wrong">{{winePrefixPath}}</div>
+          <div class="reset-button" @click="resetW3Path" />
+        </div>
+
         <div class="w3c-icon" :title="`Enter the location to wc3 (Usually ${defaultW3Location})`"/>
         <div class="reset-button-line"  :class="isW3LocationWrong ? 'path-is-wrong' : 'path-is-right'">
           <div :title="explanationW3Wrong">{{w3Path}}</div>
@@ -154,6 +161,10 @@ export default class UpdateSettingsScreen extends Vue {
 
   get isTest() {
     return this.$store.direct.state.isTest;
+  }
+
+  get winePrefixPath(): string {
+    return this.$store.direct.state.updateHandling.winePrefixPath;
   }
 
   get battleNet(): string {
