@@ -98,7 +98,10 @@ function createWindow() {
 }
 
 function createTray() {
-  const iconPath = path.join(__dirname, isDevelopment ? '../build/icon.png' : 'favicon.ico');
+  var isLinux = process.platform === "linux";
+  const iconPath = path.join(__dirname, isDevelopment ? '../build/icon.png' :
+                                        isLinux ? 'icon.png': 
+                                        'favicon.ico');
   tray = new Tray(nativeImage.createFromPath(iconPath));
 
   tray.on('click', ()=> {
@@ -153,12 +156,12 @@ if (!gotTheLock) {
       }
     }
 
-    try {
-      await autoUpdater.checkForUpdatesAndNotify();
-    } catch (e) {
-      logger.error("Updating failed horribly, starting without check for new version");
-      logger.error(e);
-    }
+    // try {
+    //   await autoUpdater.checkForUpdatesAndNotify();
+    // } catch (e) {
+    //   logger.error("Updating failed horribly, starting without check for new version");
+    //   logger.error(e);
+    // }
     createWindow();
     createTray();
   });
