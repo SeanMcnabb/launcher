@@ -26,7 +26,7 @@ module.exports = {
             to: './resources/app.asar.unpacked/flo-worker',
           },
           {
-            from: 'libs/flo-worke.elf',
+            from: 'libs/flo-worker.elf',
             to: './resources/app.asar.unpacked/flo-worker.elf',
           }
         ],
