@@ -45,7 +45,7 @@ export abstract class LauncherStrategy {
 
         if (this.store.state.isLinux)
         {
-            mapsPath = this.store.state.updateHandling.userDataPath + "Maps/";
+            mapsPath = this.store.state.updateHandling.userDataPath + "maps/";
         }
 
         const delimiter = mapsPath.endsWith('/') || mapsPath.endsWith('\\') ? '' : '/';
