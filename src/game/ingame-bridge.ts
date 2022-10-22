@@ -1,13 +1,13 @@
 import logger from "@/logger";
 import store from "@/globalState/vuex-store";
 
-const { remote } = window.require("electron");
+const { remote, ipcRenderer } = window.require("electron");
 const http = window.require("http");
 const WebSocket = window.require("ws");
 import { EventEmitter } from 'events';
-import {EGateway, ICurrentPlayer, IDownloadMapData, IDownloadMapProgressData, IPlayerInstance} from './game.types';
-import {AuthenticationService} from "@/globalState/AuthenticationService";
-import {W3cToken} from "@/globalState/rootTypings";
+import { EGateway, ICurrentPlayer, IDownloadMapData, IDownloadMapProgressData, IPlayerInstance } from './game.types';
+import { AuthenticationService } from "@/globalState/AuthenticationService";
+import { W3cToken } from "@/globalState/rootTypings";
 import { IFloNetworkTest } from '@/types/flo-types';
 import { OAUTH_ENABLED } from '@/constants';
 import { GameUtils } from './game-utils';
@@ -60,9 +60,17 @@ export class IngameBridge extends EventEmitter {
     private server = http.createServer();
     private wss = new WebSocket.Server({ server: this.server });
     private launcherVersion = '0.0.0';
+    private diagnosticsData?:string;
 
     public initialize() {
         this.launcherVersion = remote.app.getVersion();
+
+        ipcRenderer.on('diagnostic-data-forward', (_event: any, diagnosticsData: string) => {
+            this.diagnosticsData = diagnosticsData;
+        });
+
+        ipcRenderer.send('diagnostic-data');
+
         this.wss.on("connection", (ws: WebSocket, req: any) => {
             const authenticationService = new AuthenticationService();
             const token = authenticationService.loadAuthToken();
@@ -103,7 +111,7 @@ export class IngameBridge extends EventEmitter {
                     if(parsed.type === ELauncherMessageType.REQUEST_AUTHENTICATION_TOKEN) {
                         const message: ILauncherGameMessage = {
                             type: ELauncherMessageType.RECEIVED_AUTHENTICATION_TOKEN_FROM_LAUNCHER,
-                            data: store.state.w3cToken
+                            data: {diagnosticsData: this.diagnosticsData, ...store.state.w3cToken } 
                         };
                         pi.sendMessage(message);
                     }
