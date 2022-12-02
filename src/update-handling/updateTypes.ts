@@ -11,6 +11,7 @@ export interface UpdateHandlingState {
   w3PathIsInvalid: boolean,
   bnetPathIsInvalid: boolean,
   isTeamColorsEnabled: boolean,
+  isCustomFontEnabled: boolean,
   ownColor: string,
   allyColor: string,
   enemyColor: string,

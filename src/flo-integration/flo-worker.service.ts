@@ -5,10 +5,9 @@ import { FloWorkerInstance } from './flo-worker.instance';
 import { IPlayerInstance } from '@/game/game.types';
 import logger from '@/logger';
 import { IFloNetworkTest } from "@/types/flo-types";
-import { FLO_CONTROLLER_HOST_URL_PROD, FLO_CONTROLLER_HOST_URL_TEST } from "@/constants";
 import { IFloAuthData, IFloWatchGameData, IFloWorkerInstanceSettings } from "./types";
 import { floStatsService } from "./flo-stats.service";
-const { globalShortcut } = window.require("electron").remote;
+import { IEndpoint } from "@/background-thread/endpoint/endpoint.service";
 
 const { remote } = window.require("electron");
 const path = require('path');
@@ -21,15 +20,19 @@ export class FloWorkerService {
     private primaryWorker?: FloWorkerInstance;
     private secondaryWorker?: FloWorkerInstance;
     private workers: FloWorkerInstance[] = [];
+    private inited = false;
 
     public initialize() {
-        store.original.subscribeAction((x, y) => {
-            if (x.type == 'setTestMode') {
-                this.reloadWorkers(x.payload as boolean);
-            }
+        if (this.inited) {
+            return
+        }
+        this.inited = true;
+
+        ipcRenderer.on('w3c-endpoint-selected', () => {
+                this.reloadWorkers();
         });
 
-        this.reloadWorkers(store.state.isTest);
+        this.reloadWorkers();
 
         ingameBridge.on(ELauncherMessageType.FLO_AUTH, (event: IIngameBridgeEvent) => {
             const data = event.data as IFloAuthData;
@@ -111,14 +114,14 @@ export class FloWorkerService {
         }
     }
 
-    private reloadWorkers(isTest: boolean) {
+    private reloadWorkers() {
         for (const worker of this.workers) {
             worker?.stopWorker();
         }
 
         this.workers = [];
 
-        const settings = this.createWorkerSettings(isTest);
+        const settings = this.createWorkerSettings();
 
         // Start one worker by default
         this.primaryWorker = new FloWorkerInstance(settings, (event) => {
@@ -167,8 +170,17 @@ export class FloWorkerService {
         })
     }
 
-    private createWorkerSettings(isTest: boolean) {
-        const isWindows = this.store.state.isWindows;
+    // private createWorkerSettings(isTest: boolean) {
+    //     const isWindows = this.store.state.isWindows;
+    //     const isLinux = this.store.state.isLinux;
+    //     const floExecutable = isWindows ? 'flo-worker.exe'
+    //                           : isLinux ? 'flo-worker.elf'
+    //                           : 'flo-worker';
+
+    private createWorkerSettings() {
+        const { isWindows } = this.store.state
+        const endpoint: IEndpoint = this.store.getters.selectedEndpoint;
+        const floControllerHostUrl = endpoint.floControllerHost;
         const isLinux = this.store.state.isLinux;
         const floExecutable = isWindows ? 'flo-worker.exe'
                               : isLinux ? 'flo-worker.elf'
@@ -202,6 +214,7 @@ export class FloWorkerService {
             wc3FolderPath = wc3FolderPath.replace('\\_retail_', '');
         }
 
+<<<<<<< HEAD
         let wc3UserDataPath = "";
 
         if (isLinux)
@@ -212,6 +225,8 @@ export class FloWorkerService {
         const floControllerHostUrl = isTest ?
             FLO_CONTROLLER_HOST_URL_TEST : FLO_CONTROLLER_HOST_URL_PROD;
 
+=======
+>>>>>>> upstream/master
         const result: IFloWorkerInstanceSettings = {
             floWorkerFolderPath,
             floWorkerExePath,

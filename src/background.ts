@@ -1,14 +1,17 @@
 'use strict'
 
-import {app, protocol, globalShortcut, screen, BrowserWindow, dialog, ipcMain, IpcMainEvent, Tray, Menu, nativeImage } from 'electron'
+import {app, protocol, globalShortcut, screen, BrowserWindow, dialog, ipcMain, IpcMainEvent, Tray, Menu, nativeImage, shell } from 'electron'
 import {autoUpdater, UpdateInfo} from 'electron-updater'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import path from 'path';
 import { machineIdSync } from 'node-machine-id';
 import { floNetworkTestService } from './background-thread/flo/flo-network-test.service'
-import { floUtilsService } from './background-thread/flo/flo-utils.service'
 import { LoginGW } from './globalState/rootTypings'
+import { endpontService, IEndpoint } from './background-thread/endpoint/endpoint.service'
+import { floUtilsService } from './background-thread/flo/flo-utils.service'
+import fetch from 'electron-fetch'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 declare const __static: string;
 
@@ -81,6 +84,7 @@ function createWindow() {
 
   floNetworkTestService.setWindow(win);
   floUtilsService.registerHandlers();
+  endpontService.setWindow(win);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -144,11 +148,56 @@ if (!gotTheLock) {
     }
   })
 
+  ipcMain.handle('w3c-check-for-update', async (_: unknown, endpoint: IEndpoint) => {
+    let error = null
+    try {
+      if (endpoint.staticBaseUpdateFileUrl) {
+        // Special logic created for China, where access to github is unstable
+        const url = `${endpoint.updateUrl}api/launcher-version`
+        const { version } = await fetch(url).then(res => res.json())
+        const localVersion = app.getVersion()
+        if (version !== localVersion) {
+          const localParts = localVersion.split('.')
+          const remoteParts = version.split('.')
+          for (let i = 0; i < 3; i++) {
+            const local = parseInt(localParts[i])
+            const remote = parseInt(remoteParts[i])
+            if (local > remote) {
+              return;
+            } else if (local < remote) {
+              break;
+            }
+          }
+
+          if (win instanceof BrowserWindow) {
+            await dialog.showMessageBox(win, {
+              type: "info",
+              title: `New version ${version}`,
+              message: `A new version (${version}) of the launcher is out, please download and install`,
+              buttons: ['Download']
+            })
+            const filename = process.platform === 'win32' ? `w3champions Setup ${version}.exe` : `w3champions-${version}.dmg`
+            const url = `${endpoint.staticBaseReleaseUrl}${encodeURIComponent(filename)}`
+            shell.openExternal(url)
+            app.exit()
+          }
+        }
+      } else {
+        await autoUpdater.checkForUpdatesAndNotify();
+      }
+    } catch (e) {
+      logger.error("Updating failed horribly, starting without check for new version");
+      logger.error(e);
+      error = e
+    }
+  })
+
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', async () => {
-    if (isDevelopment && !process.env.IS_TEST) {
+    const isTest = Boolean(process.env.IS_TEST)
+    if (isDevelopment && !isTest) {
       // Install Vue Devtools
       try {
         await installExtension(VUEJS_DEVTOOLS)
@@ -157,12 +206,6 @@ if (!gotTheLock) {
       }
     }
 
-    // try {
-    //   await autoUpdater.checkForUpdatesAndNotify();
-    // } catch (e) {
-    //   logger.error("Updating failed horribly, starting without check for new version");
-    //   logger.error(e);
-    // }
     createWindow();
     createTray();
   });

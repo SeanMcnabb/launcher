@@ -16,6 +16,7 @@ export class UpdateService {
     saveUserDataPath(value: string) {
         this.store.set(this.userDataPathKey, value);
     }
+    private isCustomFontEnabled = "isCustomFontEnabled";
 
     loadBnetPath(): string {
         return this.store.get(this.bnetKey);
@@ -39,6 +40,14 @@ export class UpdateService {
 
     saveW3Path(value: string) {
         this.store.set(this.wc3PathKey, value);
+    }
+    
+    loadCustomFontEnabled(): boolean {
+        return this.store.get(this.isCustomFontEnabled);
+    }
+
+    saveCustomFontEnabled(value: boolean) {
+        this.store.set(this.isCustomFontEnabled, value);
     }
 
     loadIsClassicIcons(): boolean {
