@@ -214,7 +214,6 @@ export class FloWorkerService {
             wc3FolderPath = wc3FolderPath.replace('\\_retail_', '');
         }
 
-<<<<<<< HEAD
         let wc3UserDataPath = "";
 
         if (isLinux)
@@ -222,11 +221,6 @@ export class FloWorkerService {
             wc3UserDataPath = this.store.getters.updateService.loadUserDataPath();
         }
 
-        const floControllerHostUrl = isTest ?
-            FLO_CONTROLLER_HOST_URL_TEST : FLO_CONTROLLER_HOST_URL_PROD;
-
-=======
->>>>>>> upstream/master
         const result: IFloWorkerInstanceSettings = {
             floWorkerFolderPath,
             floWorkerExePath,
