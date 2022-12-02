@@ -102,37 +102,6 @@ export default class HomeScreen extends Vue {
   align-items: center;
 }
 
-<<<<<<< HEAD
-.news-button-container{
-  display: flex;
-  justify-content: center;
-  margin-bottom:1px;
-}
-
-.modt {
-  background: url("~@/assets/images/home/W3Champion_Text_Frame.png") no-repeat center;
-  background-size: cover;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  padding: 4%;
-  font-size: 14px;
-  width: 865px;
-  height: 390px;
-
-}
-
-.modt-inner {
-  height: 422px;
-  top: -32px;
-  position: relative;
-  padding: 30px 20px 0px 0px;
-  margin: 0%;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-}
-=======
->>>>>>> upstream/master
-
 .inner-location-wrapper {
   height: 180px;
   width: 605px;
