@@ -11,6 +11,7 @@ const mod = {
   state: {
     bnetPath: "",
     w3Path: "",
+    userDataPath: "",
     localW3cVersion: "",
     onlineW3cVersion: "",
     localLauncherVersion: "",
@@ -74,6 +75,7 @@ const mod = {
       commit.SET_BNET_PATH(rootGetters.updateService.loadBnetPath());
       commit.SET_W3_PATH(rootGetters.updateService.loadW3Path());
       commit.SET_LOCAL_W3C_VERSION(rootGetters.updateService.loadW3CVersion());
+      commit.SET_USER_DATA_PATH(rootGetters.updateService.loadUserDataPath());
     },
     resetPaths(context: ActionContext<UpdateHandlingState, RootState>) {
       const { rootGetters, commit } = moduleActionContext(context, mod);
@@ -88,6 +90,7 @@ const mod = {
       commit.SET_BNET_PATH("");
       commit.SET_W3_PATH("");
       commit.SET_LOCAL_W3C_VERSION("");
+      commit.SET_USER_DATA_PATH("");
     },
     sudoCopyFromTo: function (context: ActionContext<UpdateHandlingState, RootState>, obj: { from: string, to: string }) {
       const {rootGetters} = moduleActionContext(context, mod);
@@ -124,6 +127,10 @@ const mod = {
     },
     SET_W3_PATH(state: UpdateHandlingState, path: string) {
       state.w3Path = path;
+    },
+    SET_USER_DATA_PATH(state: UpdateHandlingState, path: string)
+    {
+      state.userDataPath = path;
     },
     SET_LOCAL_W3C_VERSION(state: UpdateHandlingState, version: string) {
       state.localW3cVersion = version;

@@ -95,6 +95,7 @@ const mod = {
       const { commit, rootGetters } = moduleActionContext(context, mod);
 
       commit.SET_OS(rootGetters.fileService.isWindows());
+      commit.SET_OS_Linux(rootGetters.fileService.isLinux());
     },
     loadAuthToken(context: ActionContext<UpdateHandlingState, RootState>) {
       const { commit, rootGetters } = moduleActionContext(context, mod);
@@ -160,6 +161,9 @@ const mod = {
     },
     SET_OS(state: RootState, isWindows: boolean) {
       state.isWindows = isWindows;
+    },
+    SET_OS_Linux(state: RootState, isLinux: boolean) {
+      state.isLinux = isLinux;
     },
     SET_W3CAUTH_TOKEN(state: RootState, w3cToken: W3cToken | null) {
       state.w3cToken = w3cToken;

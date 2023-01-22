@@ -7,6 +7,15 @@ export class UpdateService {
     private bnetKey = "bnetKey";
     private currentVersionKey = "currentVersionKey";
     private isClassicIconKey = "isClassicIconKey";
+    private userDataPathKey = "userDataPathKey"
+
+    loadUserDataPath(): string {
+        return this.store.get(this.userDataPathKey);
+    }
+
+    saveUserDataPath(value: string) {
+        this.store.set(this.userDataPathKey, value);
+    }
     private isCustomFontEnabled = "isCustomFontEnabled";
     private isBlizzardPTRKey = "isBlizzardPTRKey";
 

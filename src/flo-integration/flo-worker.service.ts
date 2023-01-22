@@ -28,8 +28,8 @@ export class FloWorkerService {
         }
         this.inited = true;
 
-        ipcRenderer.on('reload-flo-workers', () => {
-            this.reloadWorkers();
+        ipcRenderer.on('w3c-endpoint-selected', () => {
+                this.reloadWorkers();
         });
 
         this.reloadWorkers();
@@ -174,7 +174,10 @@ export class FloWorkerService {
         const { isWindows } = this.store.state
         const endpoint: IEndpoint = this.store.getters.selectedEndpoint;
         const floControllerHostUrl = endpoint.floControllerHost;
-        const floExecutable = (isWindows) ? 'flo-worker.exe' : 'flo-worker';
+        const isLinux = this.store.state.isLinux;
+        const floExecutable = isWindows ? 'flo-worker.exe'
+                              : isLinux ? 'flo-worker.elf'
+                              : 'flo-worker';
         let floWorkerFolderPath: string;
         if (environment.isDev) {
             const appPath = remote.app.getAppPath();
@@ -209,12 +212,19 @@ export class FloWorkerService {
 
         const ptr = blizzardPTR && test;
 
+        let wc3UserDataPath = "";
+        if (isLinux)
+        {
+            wc3UserDataPath = this.store.getters.updateService.loadUserDataPath();
+        }
+
         const result: IFloWorkerInstanceSettings = {
             floWorkerFolderPath,
             floWorkerExePath,
             wc3FolderPath,
             floControllerHostUrl,
-            ptr
+            ptr,
+            wc3UserDataPath
         };
 
         return result;

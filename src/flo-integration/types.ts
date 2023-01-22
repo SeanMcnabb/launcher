@@ -37,6 +37,7 @@ export interface IFloWorkerInstanceSettings {
     wc3FolderPath: string;
     floControllerHostUrl: string;
     ptr: boolean;
+    wc3UserDataPath: string;
 }
 
 export interface IFloWatchGameData {
