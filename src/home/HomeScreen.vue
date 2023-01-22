@@ -86,7 +86,7 @@ export default class HomeScreen extends Vue {
   }
 
   get isBnetOff() {
-    const runningProcesses = execSync("tasklist /FI \"STATUS eq RUNNING\"").toString();
+    const runningProcesses = execSync("tasklist /FI \"STATUS eq RUNNING").toString();
     const indexOf = runningProcesses.indexOf("Battle.net.exe");
     return indexOf === -1;
   }
@@ -94,36 +94,52 @@ export default class HomeScreen extends Vue {
 </script>
 
 <style scoped type="text/css">
-.home-container {
+.home-container{
   display: flex;
-  height: 100%;
+  height:100%;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 
+.inner-location-wrapper {
+  height: 180px;
+  width: 605px;
+
+}
+
+.location-wrapper {
+  background: url("~@/assets/images/settings/Settings_Directory_Text_Frame.png") no-repeat center;
+  background-size: cover;
+  padding: 28px 30px 30px 30px;
+  height: 150px;
+  width: 605px;
+}
+
 .start-button:disabled {
   opacity: 0.6;
-  cursor: unset;
+  cursor:unset;
 }
 
 .start-button {
   background: url("~@/assets/images/home/Green_Hero_Button_Static.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   border: none;
   outline: inherit;
   cursor: pointer;
-  width: max(30%, 200px);
-  height: max( 10%, 55px);
+  width: 30%;
   text-align: center;
-  line-height: max( 8%, 55px);
+  line-height: 100%;
   font-size: 28px;
-  position: fixed;
-  bottom: 5%;
+  padding:2%;
+  position:fixed;
+  bottom:5.5%;
 }
 
 .start-button:active {
   background: url("~@/assets/images/home/Green_Hero_Button_Active.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
 }
+
+
 </style>

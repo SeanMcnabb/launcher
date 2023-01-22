@@ -120,7 +120,10 @@ function createWindow() {
 }
 
 function createTray() {
-  const iconPath = path.join(__dirname, isDevelopment ? '../build/icon.png' : 'favicon.ico');
+  var isLinux = process.platform === "linux";
+  const iconPath = path.join(__dirname, isDevelopment ? '../build/icon.png' :
+                                        isLinux ? 'icon.png': 
+                                        'favicon.ico');
   tray = new Tray(nativeImage.createFromPath(iconPath));
 
   tray.on('click', ()=> {
@@ -216,7 +219,7 @@ if (!gotTheLock) {
       try {
         await installExtension(VUEJS_DEVTOOLS)
       } catch (e) {
-        logger.error('Vue Devtools failed to install:', e.toString())
+        logger.error('Vue Devtools failed to install:', e)
       }
     }
 
