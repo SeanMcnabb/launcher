@@ -170,7 +170,7 @@ export class FloWorkerInstance {
                     ['--installation-path', this.settings.wc3FolderPath,
                      '--user-data-path', this.settings.wc3UserDataPath,
                         '--controller-host', this.settings.floControllerHostUrl,
-                        '--version', "1.35.0.19887"
+                        '--version', "1.35.0.20093"
                     ],
                     { cwd: this.settings.floWorkerFolderPath }
                 );
